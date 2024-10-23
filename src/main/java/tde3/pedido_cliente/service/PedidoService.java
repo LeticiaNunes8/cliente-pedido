@@ -44,6 +44,30 @@ public class PedidoService {
         return null;
     }
 
+    public Pedido updatePedido(Long clienteId, Long pedidoId, Pedido pedidoAtualizado) {
+        Optional<Cliente> clienteOpt = clienteService.findById(clienteId);
+
+        if (clienteOpt.isPresent()) {
+            Cliente cliente = clienteOpt.get();
+
+            // Localiza o pedido existente pelo pedidoId
+            Optional<Pedido> pedidoExistenteOpt = cliente.getPedidos().stream()
+                    .filter(p -> p.getId().equals(pedidoId))
+                    .findFirst();
+
+            if (pedidoExistenteOpt.isPresent()) {
+                Pedido pedidoExistente = pedidoExistenteOpt.get();
+
+                // Atualiza os campos do pedido existente
+                pedidoExistente.setDescricao(pedidoAtualizado.getDescricao());
+                pedidoExistente.setValor(pedidoAtualizado.getValor());
+
+                return pedidoExistente;
+            }
+        }
+        return null;
+    }
+
     public boolean deletePedido(Long clienteId, Long pedidoId) {
         Optional<Cliente> clienteOpt = clienteService.findById(clienteId);
         if (clienteOpt.isPresent()) {

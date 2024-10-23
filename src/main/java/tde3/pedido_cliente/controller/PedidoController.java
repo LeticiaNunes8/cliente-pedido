@@ -42,6 +42,19 @@ public class PedidoController {
         return novoPedido != null ? ResponseEntity.ok(novoPedido) : ResponseEntity.notFound().build();
     }
 
+    @Operation(summary = "Atualizar um pedido existente de um cliente")
+    @PutMapping(value = "/{pedidoId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<Pedido> atualizarPedido(@PathVariable Long clienteId, @PathVariable Long pedidoId,
+                                                  @RequestBody Pedido pedidoAtualizado) {
+        Pedido pedidoAtualizadoResult = pedidoService.updatePedido(clienteId, pedidoId, pedidoAtualizado);
+        if (pedidoAtualizadoResult != null) {
+            return ResponseEntity.ok(pedidoAtualizadoResult);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @Operation(summary = "Deletar um pedido de um cliente")
     @DeleteMapping("/{pedidoId}")
     public ResponseEntity<Void> deletarPedido(@PathVariable Long clienteId, @PathVariable Long pedidoId) {
