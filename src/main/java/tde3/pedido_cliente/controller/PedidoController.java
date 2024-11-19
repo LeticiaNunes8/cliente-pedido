@@ -50,14 +50,12 @@ public class PedidoController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<PedidoDAO> criarPedido(@PathVariable Long clienteId, @RequestBody PedidoDAO pedido) {
-        PedidoDAO novoPedido = pedidoService.createPedido(pedido);
+        PedidoDAO novoPedido = pedidoService.createPedido(clienteId, pedido);
 
         // Verifica se o pedido foi criado com sucesso
         if (novoPedido != null) {
-            // Retorna um ResponseEntity com o status CREATED (201) e o pedido no corpo
             return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
         } else {
-            // Caso o pedido não tenha sido criado, retorna o status NOT FOUND (404)
             return ResponseEntity.notFound().build();
         }
     }

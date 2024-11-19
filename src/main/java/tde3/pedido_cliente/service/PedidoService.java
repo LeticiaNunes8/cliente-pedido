@@ -25,8 +25,8 @@ public class PedidoService {
         return pedidoRepository.findById(id);
     }
 
-    public PedidoDAO createPedido(PedidoDAO pedido){
-        return pedidoRepository.save(pedido);
+    public PedidoDAO createPedido(Long clienteId, PedidoDAO pedido){
+        return pedidoRepository.save(clienteId, pedido);
     }
 
     public PedidoDAO updatePedido(Long pedidoId, Pedido pedidoAtualizado) {
