@@ -2,6 +2,7 @@ package tde3.pedido_cliente.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,15 @@ public class PedidoController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<PedidoDAO> criarPedido(@PathVariable Long clienteId, @RequestBody PedidoDAO pedido) {
         PedidoDAO novoPedido = pedidoService.createPedido(pedido);
-        return novoPedido != null ? (ResponseEntity<PedidoDAO>) ResponseEntity.ok() : ResponseEntity.notFound().build();
+
+        // Verifica se o pedido foi criado com sucesso
+        if (novoPedido != null) {
+            // Retorna um ResponseEntity com o status CREATED (201) e o pedido no corpo
+            return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
+        } else {
+            // Caso o pedido não tenha sido criado, retorna o status NOT FOUND (404)
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation(summary = "Atualizar um pedido existente")
