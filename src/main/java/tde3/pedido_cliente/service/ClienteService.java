@@ -3,7 +3,6 @@ package tde3.pedido_cliente.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tde3.pedido_cliente.DAO.ClienteDAO;
-import tde3.pedido_cliente.models.Cliente;
 import tde3.pedido_cliente.repository.ClienteRepository;
 
 import java.util.List;

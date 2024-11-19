@@ -48,9 +48,9 @@ public class PedidoController {
     @Operation(summary = "Criar um novo pedido para um cliente")
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<Pedido> criarPedido(@PathVariable Long clienteId, @RequestBody PedidoDAO pedido) {
+    public ResponseEntity<PedidoDAO> criarPedido(@PathVariable Long clienteId, @RequestBody PedidoDAO pedido) {
         PedidoDAO novoPedido = pedidoService.createPedido(pedido);
-        return novoPedido != null ? (ResponseEntity<Pedido>) ResponseEntity.ok() : ResponseEntity.notFound().build();
+        return novoPedido != null ? (ResponseEntity<PedidoDAO>) ResponseEntity.ok() : ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "Atualizar um pedido existente")

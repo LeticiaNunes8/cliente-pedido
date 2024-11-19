@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tde3.pedido_cliente.DAO.ClienteDAO;
-import tde3.pedido_cliente.models.Cliente;
 import tde3.pedido_cliente.service.ClienteService;
 
 import java.util.List;

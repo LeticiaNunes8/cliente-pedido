@@ -1,7 +1,5 @@
 package tde3.pedido_cliente.DAO;
 
-import tde3.pedido_cliente.models.Cliente;
-
 import jakarta.persistence.*;
 
 @Entity

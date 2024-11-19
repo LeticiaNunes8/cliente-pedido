@@ -1,9 +1,6 @@
 package tde3.pedido_cliente.DAO;
 
-
 import jakarta.persistence.*;
-import tde3.pedido_cliente.models.Pedido;
-
 import java.util.List;
 
 @Entity
