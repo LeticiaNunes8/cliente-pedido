@@ -24,14 +24,14 @@ public class ClienteController {
     @Operation(summary = "Listar todos os clientes")
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<List<Cliente>> listarClientes() {
-        List<Cliente> clientes = clienteService.findAll();
+        List<Cliente> clientes = clienteService.getAllClientes();
         return ResponseEntity.ok(clientes);
     }
 
     @Operation(summary = "Obter um cliente por ID")
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Cliente> obterCliente(@PathVariable Long id) {
-        return clienteService.findById(id)
+        return clienteService.getClienteById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -40,7 +40,7 @@ public class ClienteController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Cliente> criarCliente(@RequestBody Cliente cliente) {
-        Cliente novoCliente = clienteService.create(cliente);
+        Cliente novoCliente = clienteService.createCliente(cliente);
         return ResponseEntity.ok(novoCliente);
     }
 
@@ -48,14 +48,14 @@ public class ClienteController {
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteAtualizado) {
-        Cliente cliente = clienteService.update(id, clienteAtualizado);
+        Cliente cliente = clienteService.updateCliente(clienteAtualizado);
         return cliente != null ? ResponseEntity.ok(cliente) : ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "Excluir um cliente")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarCliente(@PathVariable Long id) {
-        boolean deletado = clienteService.delete(id);
+        boolean deletado = clienteService.deleteCliente(id);
         return deletado ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }
