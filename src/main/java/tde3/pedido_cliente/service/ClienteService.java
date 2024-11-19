@@ -2,6 +2,7 @@ package tde3.pedido_cliente.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tde3.pedido_cliente.DAO.ClienteDAO;
 import tde3.pedido_cliente.models.Cliente;
 import tde3.pedido_cliente.repository.ClienteRepository;
 
@@ -16,19 +17,19 @@ public class ClienteService {
 
     //CRUD DO PROJETO
 
-    public List<Cliente> getAllClientes(){
+    public List<ClienteDAO> getAllClientes(){
         return clienteRepository.findAll();
     }
 
-    public Optional<Cliente> getClienteById(Long id){
+    public Optional<ClienteDAO> getClienteById(Long id){
         return clienteRepository.findById(id);
     }
 
-    public Cliente createCliente(Cliente cliente){
+    public ClienteDAO createCliente(ClienteDAO cliente){
         return clienteRepository.save(cliente);
     }
 
-    public Cliente updateCliente(Cliente cliente) {
+    public ClienteDAO updateCliente(ClienteDAO cliente) {
         return clienteRepository.save(cliente);
     }
 

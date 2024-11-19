@@ -1,9 +1,9 @@
 package tde3.pedido_cliente.DAO;
 
 
+import jakarta.persistence.*;
 import tde3.pedido_cliente.models.Pedido;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -14,5 +14,5 @@ public class ClienteDAO {
     private String nome;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<Pedido> pedidos;
+    private List<PedidoDAO> pedidos;
 }

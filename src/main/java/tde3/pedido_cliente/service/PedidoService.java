@@ -2,6 +2,7 @@ package tde3.pedido_cliente.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tde3.pedido_cliente.DAO.PedidoDAO;
 import tde3.pedido_cliente.models.Pedido;
 import tde3.pedido_cliente.repository.PedidoRepository;
 
@@ -16,21 +17,21 @@ public class PedidoService {
 
     //CRUD DO PROJETO
 
-    public List<Pedido> getAllPedidos(){
+    public List<PedidoDAO> getAllPedidos(){
         return pedidoRepository.findAll();
     }
 
-    public Optional<Pedido> getPedidoById(Long id){
+    public Optional<PedidoDAO> getPedidoById(Long id){
         return pedidoRepository.findById(id);
     }
 
-    public Pedido createPedido(Pedido pedido){
+    public PedidoDAO createPedido(PedidoDAO pedido){
         return pedidoRepository.save(pedido);
     }
 
-    public Pedido updatePedido(Long pedidoId, Pedido pedidoAtualizado) {
+    public PedidoDAO updatePedido(Long pedidoId, Pedido pedidoAtualizado) {
         // Busca o pedido pelo ID
-        Pedido pedidoExistente = pedidoRepository.findById(pedidoId)
+        PedidoDAO pedidoExistente = pedidoRepository.findById(pedidoId)
                 .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
 
         // Atualiza as informações do pedido

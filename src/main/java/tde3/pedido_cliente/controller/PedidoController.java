@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tde3.pedido_cliente.DAO.PedidoDAO;
 import tde3.pedido_cliente.models.Pedido;
 import tde3.pedido_cliente.service.PedidoService;
 
@@ -23,18 +24,23 @@ public class PedidoController {
 
     @Operation(summary = "Listar todos os pedidos de um cliente")
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<List<Pedido>> listarPedidos(@PathVariable Long clienteId) {
-        List<Pedido> pedidos = pedidoService.getAllPedidos();
-        return pedidos != null ? ResponseEntity.ok(pedidos) : ResponseEntity.notFound().build();
+    public ResponseEntity<List<PedidoDAO>> listarPedidos(@PathVariable Long clienteId) {
+        List<PedidoDAO> pedidos = pedidoService.getAllPedidos();
+
+        // Verifica se a lista está vazia ou nula
+        if (pedidos == null || pedidos.isEmpty()) {
+            return ResponseEntity.notFound().build(); // Retorna 404
+        }
+        return ResponseEntity.ok(pedidos); // Retorna 200 com a lista de pedidos
     }
 
     @Operation(summary = "Obter um pedido específico de um cliente")
     @GetMapping(value = "/{pedidoId}",
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<Pedido> obterPedido(@PathVariable Long clienteId,
-                                              @PathVariable Long pedidoId) {
+    public ResponseEntity<PedidoDAO> obterPedido(@PathVariable Long clienteId,
+                                                 @PathVariable Long pedidoId) {
         // Utiliza o metodo getPedidoById, que retorna um Optional
-        Optional<Pedido> pedido = pedidoService.getPedidoById(pedidoId);
+        Optional<PedidoDAO> pedido = pedidoService.getPedidoById(pedidoId);
 
         // Verifica se o pedido foi encontrado e retorna a resposta apropriada
         return pedido.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -42,21 +48,21 @@ public class PedidoController {
     @Operation(summary = "Criar um novo pedido para um cliente")
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<Pedido> criarPedido(@PathVariable Long clienteId, @RequestBody Pedido pedido) {
-        Pedido novoPedido = pedidoService.createPedido(pedido);
-        return novoPedido != null ? ResponseEntity.ok(novoPedido) : ResponseEntity.notFound().build();
+    public ResponseEntity<Pedido> criarPedido(@PathVariable Long clienteId, @RequestBody PedidoDAO pedido) {
+        PedidoDAO novoPedido = pedidoService.createPedido(pedido);
+        return novoPedido != null ? (ResponseEntity<Pedido>) ResponseEntity.ok() : ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "Atualizar um pedido existente")
     @PutMapping(value = "/pedidos/{pedidoId}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<Pedido> atualizarPedido(
+    public ResponseEntity<PedidoDAO> atualizarPedido(
             @PathVariable Long pedidoId,
             @RequestBody Pedido pedidoAtualizado) {
         try {
             // Atualiza o pedido
-            Pedido pedidoAtualizadoResult = pedidoService.updatePedido(pedidoId, pedidoAtualizado);
+            PedidoDAO pedidoAtualizadoResult = pedidoService.updatePedido(pedidoId, pedidoAtualizado);
             return ResponseEntity.ok(pedidoAtualizadoResult);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

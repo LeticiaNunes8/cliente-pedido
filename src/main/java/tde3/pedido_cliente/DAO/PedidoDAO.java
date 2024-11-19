@@ -2,7 +2,7 @@ package tde3.pedido_cliente.DAO;
 
 import tde3.pedido_cliente.models.Cliente;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class PedidoDAO {
@@ -15,5 +15,12 @@ public class PedidoDAO {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    private ClienteDAO cliente;
+
+    public void setDescricao(String descricao) {
+    }
+
+    public void setValor(Double valor) {
+
+    }
 }
