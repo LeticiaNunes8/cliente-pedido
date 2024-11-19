@@ -50,13 +50,13 @@ public class PedidoController {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<PedidoDAO> criarPedido(@PathVariable Long clienteId, @RequestBody PedidoDAO pedido) {
-        PedidoDAO novoPedido = pedidoService.createPedido(clienteId, pedido);
+        try {
+            PedidoDAO novoPedido = pedidoService.createPedido(clienteId, pedido);
 
-        // Verifica se o pedido foi criado com sucesso
-        if (novoPedido != null) {
+            // Verifica se o pedido foi criado com sucesso
             return ResponseEntity.status(HttpStatus.CREATED).body(novoPedido);
-        } else {
-            return ResponseEntity.notFound().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
